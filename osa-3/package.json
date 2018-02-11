@@ -1,0 +1,26 @@
+{
+  "name": "osa-3",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node dist/index.js",
+    "watch": "nodemon --watch dist dist/index.js",
+    "build": "babel --source-maps -d dist/ src/ --copy-files",
+    "build:watch": "babel --source-maps --watch -d dist/ src/ --copy-files"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-stage-1": "^6.24.1",
+    "body-parser": "^1.18.2",
+    "cors": "^2.8.4",
+    "ejs": "^2.5.7",
+    "express": "^4.16.2",
+    "lodash": "^4.17.5",
+    "morgan": "^1.9.0"
+  }
+}
