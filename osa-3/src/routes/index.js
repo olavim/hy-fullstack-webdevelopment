@@ -7,4 +7,4 @@ export default () => {
 	router.use('/api', getApiRoutes());
 	router.use('/info', getInfoRoutes());
 	return router;
-}
+};

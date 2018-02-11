@@ -8,7 +8,8 @@
     "start": "node dist/index.js",
     "watch": "nodemon --watch dist dist/index.js",
     "build": "babel --source-maps -d dist/ src/ --copy-files",
-    "build:watch": "babel --source-maps --watch -d dist/ src/ --copy-files"
+    "build:watch": "babel --source-maps --watch -d dist/ src/ --copy-files",
+    "lint": "eslint src"
   },
   "author": "Olavi Mustanoja",
   "license": "ISC",
@@ -25,5 +26,9 @@
     "lodash": "^4.17.5",
     "mongoose": "^5.0.4",
     "morgan": "^1.9.0"
+  },
+  "devDependencies": {
+    "eslint": "^4.17.0",
+    "eslint-plugin-react": "^7.6.1"
   }
 }

@@ -5,7 +5,7 @@ import morgan from 'morgan';
 import cors from 'cors';
 import getRoutes from './routes';
 
-morgan.token('body', (req, res) => JSON.stringify(req.body));
+morgan.token('body', req => JSON.stringify(req.body));
 
 export default () => {
 	const app = express();
@@ -28,6 +28,7 @@ export default () => {
 	app.use('/', getRoutes());
 	app.use(express.static(path.resolve(__dirname, '../web')));
 
+	// eslint-disable-next-line no-unused-vars
 	app.use((err, req, res, next) => {
 		res.status(err.status || 500).json({
 			status: err.status || 500,
@@ -37,4 +38,4 @@ export default () => {
 	});
 
 	return app;
-}
+};

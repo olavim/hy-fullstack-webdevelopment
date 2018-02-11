@@ -6,4 +6,4 @@ export default () => {
 	router.use('/persons', getPersonsApi());
 
 	return router;
-}
+};

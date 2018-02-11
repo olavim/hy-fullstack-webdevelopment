@@ -18,7 +18,7 @@ const personSchema = new _mongoose2.default.Schema({
 personSchema.set('toJSON', {
 	virtuals: true,
 	versionKey: false,
-	transform: function (doc, ret, options) {
+	transform: function (doc, ret) {
 		delete ret._id;
 	}
 });

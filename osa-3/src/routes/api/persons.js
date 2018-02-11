@@ -9,7 +9,7 @@ export default () => {
 
 	router.use('/:id', (req, res, next) => {
 		if (!isValidId(req.params.id)) {
-			throw {status: 400, message: 'invalid id'}
+			throw {status: 400, message: 'invalid id'};
 		}
 
 		next();
@@ -25,7 +25,7 @@ export default () => {
 		const person = await Person.findById(id);
 
 		if (!person) {
-			throw {status: 404, message: 'record does not exist'}
+			throw {status: 404, message: 'record does not exist'};
 		}
 
 		res.json(person);
@@ -50,4 +50,4 @@ export default () => {
 	}));
 
 	return router;
-}
+};

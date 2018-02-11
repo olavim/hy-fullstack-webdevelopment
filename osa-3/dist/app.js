@@ -30,7 +30,7 @@ var _routes2 = _interopRequireDefault(_routes);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-_morgan2.default.token('body', (req, res) => JSON.stringify(req.body));
+_morgan2.default.token('body', req => JSON.stringify(req.body));
 
 exports.default = () => {
 	const app = (0, _express2.default)();
@@ -44,6 +44,7 @@ exports.default = () => {
 	app.use('/', (0, _routes2.default)());
 	app.use(_express2.default.static(_path2.default.resolve(__dirname, '../web')));
 
+	// eslint-disable-next-line no-unused-vars
 	app.use((err, req, res, next) => {
 		res.status(err.status || 500).json({
 			status: err.status || 500,
