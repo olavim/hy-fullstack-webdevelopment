@@ -19,8 +19,7 @@ if (process.env.NODE_ENV !== 'production') {
 	console.log('Loaded env');
 }
 
-const { MONGO_URL, MONGO_USER, MONGO_PASS } = process.env;
-_mongoose2.default.connect(`mongodb://${MONGO_USER}:${MONGO_PASS}@${MONGO_URL}`);
+_mongoose2.default.connect(process.env.MONGODB_URI);
 
 const app = (0, _app2.default)();
 const port = process.env.PORT || 3001;

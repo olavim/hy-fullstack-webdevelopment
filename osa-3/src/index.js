@@ -7,8 +7,7 @@ if (process.env.NODE_ENV !== 'production') {
 	console.log('Loaded env');
 }
 
-const {MONGO_URL, MONGO_USER, MONGO_PASS} = process.env;
-mongoose.connect(`mongodb://${MONGO_USER}:${MONGO_PASS}@${MONGO_URL}`);
+mongoose.connect(process.env.MONGODB_URI);
 
 const app = getApp();
 const port = process.env.PORT || 3001;

@@ -4,11 +4,7 @@ if (process.env.NODE_ENV !== 'production') {
 	require('dotenv').load();
 }
 
-const MONGO_URL = process.env.MONGO_URL;
-const MONGO_USER = process.env.MONGO_USER;
-const MONGO_PASS = process.env.MONGO_PASS;
-
-mongoose.connect(`mongodb://${MONGO_USER}:${MONGO_PASS}@${MONGO_URL}`);
+mongoose.connect(process.env.MONGODB_URI);
 
 const personSchema = new mongoose.Schema({
 	name: {type: String, unique: true},
