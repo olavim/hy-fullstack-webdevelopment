@@ -26,6 +26,7 @@ export default function(resources) {
 	)));
 
 	app.use('/', getRoutes(resources));
+	app.use(express.static(path.resolve(__dirname, '../web')));
 
 	app.use((err, req, res, next) => {
 		res.status(err.status || 500).json({

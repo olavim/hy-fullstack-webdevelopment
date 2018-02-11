@@ -14,6 +14,7 @@ exports.default = function (resources) {
 	app.use((0, _morgan2.default)((tokens, req, res) => [tokens.method(req, res), tokens.url(req, res), tokens.body(req, res), tokens.status(req, res), tokens.res(req, res, 'content-length'), '-', tokens['response-time'](req, res), 'ms'].join(' ')));
 
 	app.use('/', (0, _routes2.default)(resources));
+	app.use(_express2.default.static(_path2.default.resolve(__dirname, '../web')));
 
 	app.use((err, req, res, next) => {
 		res.status(err.status || 500).json({
