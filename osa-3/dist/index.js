@@ -44,8 +44,9 @@ const resources = {
 };
 
 const app = (0, _app2.default)(resources);
+const port = process.env.PORT || 3001;
 
-app.listen(process.env.PORT || 3001, () => {
-	console.log('Server listening on port 3001');
+app.listen(port, () => {
+	console.log(`Server listening on port ${port}`);
 });
 //# sourceMappingURL=index.js.map
