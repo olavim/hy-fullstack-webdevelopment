@@ -7,7 +7,7 @@ import getRoutes from './routes';
 
 morgan.token('body', (req, res) => JSON.stringify(req.body));
 
-export default function(resources) {
+export default () => {
 	const app = express();
 
 	app.set('view engine', 'ejs');
@@ -25,7 +25,7 @@ export default function(resources) {
 		].join(' ')
 	)));
 
-	app.use('/', getRoutes(resources));
+	app.use('/', getRoutes());
 	app.use(express.static(path.resolve(__dirname, '../web')));
 
 	app.use((err, req, res, next) => {
@@ -35,5 +35,6 @@ export default function(resources) {
 			stackTrace: err.stack
 		});
 	});
+
 	return app;
 }

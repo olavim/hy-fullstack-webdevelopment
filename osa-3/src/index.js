@@ -1,52 +1,16 @@
+import dotenv from 'dotenv';
+import mongoose from 'mongoose';
 import getApp from './app';
 
-const resources = {
-	persons: {
-		validation: {
-			fields: [
-				{
-					name: 'name',
-					type: 'string',
-					required: true,
-					unique: true
-				},
-				{
-					name: 'number',
-					type: 'string',
-					required: true
-				},
-				{
-					name: 'id',
-					generated: true
-				}
-			]
-		},
-		data: [
-			{
-				name: 'Arto Hellas',
-				number: '040-123456',
-				id: 1
-			},
-			{
-				name: 'Martti Tienari',
-				number: '040-123456',
-				id: 2
-			},
-			{
-				name: 'Arto Järvinen',
-				number: '040-123456',
-				id: 3
-			},
-			{
-				name: 'Lea Kutvonen',
-				number: '040-123456',
-				id: 4
-			}
-		]
-	}
-};
+if (process.env.NODE_ENV !== 'production') {
+	dotenv.load();
+	console.log('Loaded env');
+}
 
-const app = getApp(resources);
+const {MONGO_URL, MONGO_USER, MONGO_PASS} = process.env;
+mongoose.connect(`mongodb://${MONGO_USER}:${MONGO_PASS}@${MONGO_URL}`);
+
+const app = getApp();
 const port = process.env.PORT || 3001;
 
 app.listen(port, () => {
