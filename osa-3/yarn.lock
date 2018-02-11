@@ -987,6 +987,10 @@ expand-range@^1.8.1:
   dependencies:
     fill-range "^2.1.0"
 
+express-async-handler@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.npmjs.org/express-async-handler/-/express-async-handler-1.0.3.tgz#2175dedb340ce202f244c6e49ecc12ef459a17d2"
+
 express@^4.16.2:
   version "4.16.2"
   resolved "https://registry.npmjs.org/express/-/express-4.16.2.tgz#e35c6dfe2d64b7dca0a5cd4f21781be3299e076c"
