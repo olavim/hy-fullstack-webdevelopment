@@ -10,7 +10,7 @@
     "build": "babel --source-maps -d dist/ src/ --copy-files",
     "build:watch": "babel --source-maps --watch -d dist/ src/ --copy-files"
   },
-  "author": "",
+  "author": "Olavi Mustanoja",
   "license": "ISC",
   "dependencies": {
     "babel-cli": "^6.26.0",
