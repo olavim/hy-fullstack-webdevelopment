@@ -5,14 +5,20 @@ import Blog from '../../models/blog';
 export default () => {
 	const router = express.Router();
 
-
-	app.get('/', asyncHandler(async(request, response) => {
+	router.get('/', asyncHandler(async(request, response) => {
 		const blogs = await Blog.find({});
 		response.json(blogs);
 	}));
 
-	app.post('/', asyncHandler(async(request, response) => {
+	router.post('/', asyncHandler(async(request, response) => {
 		const blog = new Blog(request.body);
+
+		try {
+			await blog.validate();
+		} catch (err) {
+			throw {status: 400, message: 'Bad Request'};
+		}
+
 		const savedBlog = await blog.save();
 		response.status(201).json(savedBlog);
 	}));

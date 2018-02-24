@@ -7,9 +7,9 @@ Object.defineProperty(exports, "__esModule", {
 var _modelUtils = require('../lib/model-utils');
 
 exports.default = (0, _modelUtils.getModel)('Blog', {
-	title: String,
+	title: { type: String, required: true },
 	author: String,
-	url: String,
-	likes: Number
+	url: { type: String, required: true },
+	likes: { type: Number, default: 0 }
 });
 //# sourceMappingURL=blog.js.map

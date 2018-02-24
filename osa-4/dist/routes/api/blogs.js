@@ -23,7 +23,7 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 exports.default = () => {
 	const router = _express2.default.Router();
 
-	app.get('/', (0, _expressAsyncHandler2.default)((() => {
+	router.get('/', (0, _expressAsyncHandler2.default)((() => {
 		var _ref = _asyncToGenerator(function* (request, response) {
 			const blogs = yield _blog2.default.find({});
 			response.json(blogs);
@@ -34,9 +34,16 @@ exports.default = () => {
 		};
 	})()));
 
-	app.post('/', (0, _expressAsyncHandler2.default)((() => {
+	router.post('/', (0, _expressAsyncHandler2.default)((() => {
 		var _ref2 = _asyncToGenerator(function* (request, response) {
 			const blog = new _blog2.default(request.body);
+
+			try {
+				yield blog.validate();
+			} catch (err) {
+				throw { status: 400, message: 'Bad Request' };
+			}
+
 			const savedBlog = yield blog.save();
 			response.status(201).json(savedBlog);
 		});
