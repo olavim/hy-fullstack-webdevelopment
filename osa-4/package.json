@@ -7,7 +7,8 @@
     "start": "node dist/index.js",
     "watch": "nodemon --watch dist dist/index.js",
     "build": "babel --source-maps -d dist/ src/ --copy-files",
-    "build:watch": "babel --source-maps --watch -d dist/ src/ --copy-files"
+    "build:watch": "babel --source-maps --watch -d dist/ src/ --copy-files",
+    "test": "jest --verbose"
   },
   "author": "Olavi Mustanoja",
   "license": "ISC",
@@ -15,12 +16,15 @@
     "body-parser": "^1.18.2",
     "cors": "^2.8.4",
     "express": "^4.16.2",
+    "express-async-handler": "^1.0.3",
     "mongoose": "^5.0.7"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-preset-env": "^1.6.1",
     "babel-preset-stage-1": "^6.24.1",
-    "dotenv": "^5.0.0"
+    "dotenv": "^5.0.0",
+    "jest": "^22.4.2",
+    "nodemon": "^1.15.1"
   }
 }
