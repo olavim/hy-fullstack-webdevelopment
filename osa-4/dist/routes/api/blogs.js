@@ -53,6 +53,45 @@ exports.default = () => {
 		};
 	})()));
 
+	router.delete('/:id', (0, _expressAsyncHandler2.default)((() => {
+		var _ref3 = _asyncToGenerator(function* (request, response) {
+			const { id } = request.params;
+			try {
+				yield _blog2.default.findByIdAndRemove(id);
+			} catch (err) {
+				throw { status: 400, message: 'Invalid id' };
+			}
+			response.status(204).json({ message: 'deleted' });
+		});
+
+		return function (_x5, _x6) {
+			return _ref3.apply(this, arguments);
+		};
+	})()));
+
+	router.put('/:id', (0, _expressAsyncHandler2.default)((() => {
+		var _ref4 = _asyncToGenerator(function* (request, response) {
+			const { id } = request.params;
+			let blog;
+
+			try {
+				blog = yield _blog2.default.findByIdAndUpdate(id, request.body, { new: true });
+			} catch (err) {
+				throw { status: 400, message: 'Invalid id' };
+			}
+
+			if (!blog) {
+				throw { status: 404, message: `Resource with id ${id} not found` };
+			}
+
+			response.status(201).json(blog);
+		});
+
+		return function (_x7, _x8) {
+			return _ref4.apply(this, arguments);
+		};
+	})()));
+
 	return router;
 };
 //# sourceMappingURL=blogs.js.map
