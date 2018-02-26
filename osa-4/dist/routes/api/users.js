@@ -4,19 +4,17 @@ Object.defineProperty(exports, "__esModule", {
 	value: true
 });
 
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
 var _express = require('express');
 
 var _express2 = _interopRequireDefault(_express);
 
+var _bcrypt = require('bcrypt');
+
+var _bcrypt2 = _interopRequireDefault(_bcrypt);
+
 var _expressAsyncHandler = require('express-async-handler');
 
 var _expressAsyncHandler2 = _interopRequireDefault(_expressAsyncHandler);
-
-var _blog = require('../../models/blog');
-
-var _blog2 = _interopRequireDefault(_blog);
 
 var _user = require('../../models/user');
 
@@ -31,12 +29,8 @@ exports.default = () => {
 
 	router.get('/', (0, _expressAsyncHandler2.default)((() => {
 		var _ref = _asyncToGenerator(function* (request, response) {
-			try {
-				const blogs = yield _blog2.default.find({}).populate('user', { username: 1, isAdult: 1 });
-				response.json(blogs);
-			} catch (err) {
-				console.log(err);
-			}
+			const users = yield _user2.default.find({}, { passwordHash: 0 }).populate('blogs', { user: 0 });
+			response.json(users);
 		});
 
 		return function (_x, _x2) {
@@ -46,20 +40,29 @@ exports.default = () => {
 
 	router.post('/', (0, _expressAsyncHandler2.default)((() => {
 		var _ref2 = _asyncToGenerator(function* (request, response) {
-			const user = yield _user2.default.findById(request.user.id);
-			const blog = new _blog2.default(_extends({}, request.body, { user: user.id }));
+			const { username, name, password, isAdult } = request.body;
+
+			if (!password || password.length < 3) {
+				throw { status: 400, message: 'Bad Request' };
+			}
+
+			const existingUsers = yield _user2.default.find({ username });
+			if (existingUsers.length > 0) {
+				throw { status: 400, message: 'Username Exists' };
+			}
+
+			const passwordHash = yield _bcrypt2.default.hash(password, 10);
+			const user = new _user2.default({ username, name, passwordHash, isAdult });
 
 			try {
-				yield blog.validate();
+				yield user.validate();
 			} catch (err) {
 				throw { status: 400, message: 'Bad Request' };
 			}
 
-			user.blogs = user.blogs.concat(blog.id);
-			yield user.save();
-
-			const savedBlog = yield blog.save();
-			response.status(201).json(savedBlog);
+			const savedUser = yield user.save();
+			delete savedUser.passwordHash;
+			response.status(201).json(savedUser);
 		});
 
 		return function (_x3, _x4) {
@@ -70,22 +73,11 @@ exports.default = () => {
 	router.delete('/:id', (0, _expressAsyncHandler2.default)((() => {
 		var _ref3 = _asyncToGenerator(function* (request, response) {
 			const { id } = request.params;
-
-			let blog;
 			try {
-				blog = yield _blog2.default.findById(id);
+				yield _user2.default.findByIdAndRemove(id);
 			} catch (err) {
 				throw { status: 400, message: 'Invalid id' };
 			}
-
-			if (blog) {
-				if (blog.user.toString() !== request.user.id) {
-					throw { status: 401, message: 'Cannot delete someone else\'s blog' };
-				}
-
-				yield blog.remove();
-			}
-
 			response.status(204).json({ message: 'deleted' });
 		});
 
@@ -97,19 +89,19 @@ exports.default = () => {
 	router.put('/:id', (0, _expressAsyncHandler2.default)((() => {
 		var _ref4 = _asyncToGenerator(function* (request, response) {
 			const { id } = request.params;
-			let blog;
+			let user;
 
 			try {
-				blog = yield _blog2.default.findByIdAndUpdate(id, request.body, { new: true });
+				user = yield _user2.default.findByIdAndUpdate(id, request.body, { new: true });
 			} catch (err) {
 				throw { status: 400, message: 'Invalid id' };
 			}
 
-			if (!blog) {
+			if (!user) {
 				throw { status: 404, message: `Resource with id ${id} not found` };
 			}
 
-			response.status(201).json(blog);
+			response.status(201).json(user);
 		});
 
 		return function (_x7, _x8) {
@@ -119,4 +111,4 @@ exports.default = () => {
 
 	return router;
 };
-//# sourceMappingURL=blogs.js.map
+//# sourceMappingURL=users.js.map
