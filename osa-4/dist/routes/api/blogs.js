@@ -100,7 +100,7 @@ exports.default = () => {
 			let blog;
 
 			try {
-				blog = yield _blog2.default.findByIdAndUpdate(id, request.body, { new: true });
+				blog = yield _blog2.default.findByIdAndUpdate(id, request.body, { new: true }).populate('user', { username: 1, isAdult: 1 });
 			} catch (err) {
 				throw { status: 400, message: 'Invalid id' };
 			}

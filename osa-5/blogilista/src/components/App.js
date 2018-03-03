@@ -1,5 +1,5 @@
 import React from 'react';
-import {BrowserRouter, Route, Switch, Redirect} from 'react-router-dom';
+import {Route, Switch, Redirect} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import Blogs from '../scenes/Blogs';
 import Login from '../scenes/Login';
@@ -45,14 +45,10 @@ class App extends React.Component {
 
 	render() {
 		return (
-			<div>
-				<BrowserRouter>
-					<Switch>
-						<AuthenticatedRoute exact path="/" component={Blogs}/>
-						<Route path="/login" render={props => <Login {...props}/>}/>
-					</Switch>
-				</BrowserRouter>
-			</div>
+			<Switch>
+				<AuthenticatedRoute exact path="/" component={Blogs}/>
+				<Route path="/login" render={props => <Login {...props}/>}/>
+			</Switch>
 		);
 	}
 }

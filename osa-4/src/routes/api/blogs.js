@@ -43,7 +43,7 @@ export default () => {
 		}
 
 		if (blog) {
-			if (blog.user.toString() !== request.user.id) {
+			if (blog.user && blog.user.toString() !== request.user.id) {
 				throw {status: 401, message: 'Cannot delete someone else\'s blog'};
 			}
 
@@ -58,7 +58,7 @@ export default () => {
 		let blog;
 
 		try {
-			blog = await Blog.findByIdAndUpdate(id, request.body, {new: true});
+			blog = await Blog.findByIdAndUpdate(id, request.body, {new: true}).populate('user', {username: 1, isAdult: 1});
 		} catch (err) {
 			throw {status: 400, message: 'Invalid id'};
 		}

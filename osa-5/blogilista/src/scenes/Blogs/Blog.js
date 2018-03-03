@@ -33,12 +33,16 @@ class Blog extends React.Component {
 				onClick={this.handleClick}
 			>
 				{blog.title} - {blog.author}
-				<div style={{display: this.state.expanded ? 'block' : 'none'}}>
-					<div><a href={blog.url}>{blog.url}</a></div>
-					<div>{blog.likes} likes <button onClick={this.handleClickLike}>like</button></div>
-					<div>added by {blog.user.username}</div>
-					<div><button onClick={this.handleClickDelete}>delete</button></div>
-				</div>
+				{this.state.expanded && (
+					<div>
+						<div><a href={blog.url}>{blog.url}</a></div>
+						<div>{blog.likes} likes <button onClick={this.handleClickLike}>like</button></div>
+						<div>added by {blog.user.username}</div>
+						<div>
+							<button onClick={this.handleClickDelete}>delete</button>
+						</div>
+					</div>
+				)}
 			</div>
 		);
 	}

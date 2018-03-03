@@ -49,6 +49,7 @@ exports.default = () => {
 
 			const userForToken = {
 				username: user.username,
+				name: user.name,
 				id: user.id
 			};
 
